@@ -19,11 +19,13 @@ const controller = {
     try {
       upload(req, res, (err) => {
         if (err) {
+          console.log(err)
           return res.status(400).send({ error: "Save failed" });
         }
         speech(name, res)
       });
     } catch (err) {
+      console.log(err)
       res.status(500).send({ error: "Save failed" });
     }
   },

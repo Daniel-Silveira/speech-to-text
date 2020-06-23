@@ -4,6 +4,7 @@ const SpeechToTextV1 = require("ibm-watson/speech-to-text/v1");
 const ffmpeg = require("fluent-ffmpeg");
 const path = require("path");
 const multer = require("multer");
+const sendMessages = require("./sendMessage");
 
 const speechToText = new SpeechToTextV1({
   authenticator: new IamAuthenticator({
@@ -32,7 +33,7 @@ const speech = (name, res) => {
       })
       .run();
   }
-  const newName = `public/sound/convert-${Date.now()}.webm`
+  const newName = `public/sound/convert-${Date.now()}.webm`;
 
   convert(`public/sound/${name}`, newName, function (err) {
     if (!err) {
@@ -40,14 +41,15 @@ const speech = (name, res) => {
 
       fs.createReadStream(newName).pipe(recognizeStream);
 
+      console.log(newName);
+
       let text = "";
 
       recognizeStream.on("data", function (event) {
         event.results.map(
           (i) => (text = `${text}${i.alternatives[0].transcript}`)
         );
-        console.log(text);
-        return res.status(200).send({ message: text });
+        sendMessages(text, res);
       });
       recognizeStream.on("error", function (event) {
         console.log("Error:", event);
@@ -56,5 +58,4 @@ const speech = (name, res) => {
   });
 };
 
-
-module.exports = speech
+module.exports = speech;

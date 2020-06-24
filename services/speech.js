@@ -2,9 +2,6 @@ const fs = require("fs");
 const { IamAuthenticator } = require("ibm-watson/auth");
 const SpeechToTextV1 = require("ibm-watson/speech-to-text/v1");
 const ffmpeg = require("fluent-ffmpeg");
-const path = require("path");
-const multer = require("multer");
-const sendMessages = require("./sendMessage");
 
 const speechToText = new SpeechToTextV1({
   authenticator: new IamAuthenticator({

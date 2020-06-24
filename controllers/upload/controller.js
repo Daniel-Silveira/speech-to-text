@@ -4,11 +4,12 @@ const speech = require("../../services/speech");
 
 const controller = {
   new: async (req, res) => {
+    const { sessionId } = req.params;
     let name = "";
     const storage = multer.diskStorage({
       destination: "./public/sound",
       filename: function (req, file, cb) {
-        name = "audio" + Date.now() + path.extname(file.originalname) + '.mp3'
+        name = "audio" + Date.now() + path.extname(file.originalname) + ".mp3";
         cb(null, name);
       },
     });
@@ -19,13 +20,13 @@ const controller = {
     try {
       upload(req, res, (err) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           return res.status(400).send({ error: "Save failed" });
         }
-        speech(name, res)
+        speech(sessionId, name, res);
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).send({ error: "Save failed" });
     }
   },

@@ -1,15 +1,15 @@
 const AssistantV2 = require("ibm-watson/assistant/v2");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
-const assistantId = "1464f5c9-8ddb-44bc-8d90-6ec6a9c4424f";
+const assistantId = "aa55456b-9436-4a0f-8a29-c38c0b460dc1";
 
 const assistant = new AssistantV2({
   version: "2020-04-01",
   authenticator: new IamAuthenticator({
-    apikey: "lqclJB_GTbRBT-ZFP1sIVCrH3VhTTAtNubCiatDNgLNo",
+    apikey: "QZHK4c_LARQsXpewvplxaYZBNi1jgPCFAX-NBfZ103f8",
   }),
   url:
-    "https://api.us-south.assistant.watson.cloud.ibm.com/instances/2e1d630c-7d45-4fc6-b90d-3f08c24686bf",
+    "https://api.us-south.assistant.watson.cloud.ibm.com/instances/c513114b-f750-4b0f-8327-c6e2692856aa",
 });
 
 const getSession = (res) => {

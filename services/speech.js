@@ -19,7 +19,8 @@ var params = {
   contentType: "audio/webm",
   model: "pt-BR_BroadbandModel",
 };
-const speech = (name, res) => {
+
+const speech = (sessionId, name, res) => {
   function convert(input, output, callback) {
     ffmpeg(input)
       .output(output)
@@ -41,15 +42,13 @@ const speech = (name, res) => {
 
       fs.createReadStream(newName).pipe(recognizeStream);
 
-      console.log(newName);
-
       let text = "";
 
       recognizeStream.on("data", function (event) {
         event.results.map(
           (i) => (text = `${text}${i.alternatives[0].transcript}`)
         );
-        sendMessages(text, res);
+        res.status(200).send({ sessionId, text });
       });
       recognizeStream.on("error", function (event) {
         console.log("Error:", event);

@@ -12,24 +12,17 @@ const assistant = new AssistantV2({
     "https://api.us-south.assistant.watson.cloud.ibm.com/instances/2e1d630c-7d45-4fc6-b90d-3f08c24686bf",
 });
 
-const sendMessages = (sessionId, text, response) => {
+const getSession = (res) => {
   assistant
-    .message({
+    .createSession({
       assistantId,
-      sessionId,
-      input: {
-        message_type: "text",
-        text: text,
-      },
     })
-    .then(({ result }) => {
-      const textReponse = result.output.generic[0].text;
-      console.log(textReponse);
-      return response.status(200).send({ message: textReponse });
+    .then((response) => {
+      res.status(200).send({ sessionId: response.result.session_id });
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-module.exports = sendMessages;
+module.exports = getSession;

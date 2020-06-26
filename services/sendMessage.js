@@ -32,7 +32,7 @@ const sendMessages = (sessionId, text, response) => {
       return response.status(200).send({ message: textReponse });
     })
     .catch((err) => {
-      console.log(err);
+      response.status(500).send({ status: 500, message: 'Mensagem não enviada' });
     });
 };
 
